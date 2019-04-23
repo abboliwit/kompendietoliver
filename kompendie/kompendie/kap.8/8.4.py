@@ -1,5 +1,6 @@
 import web
 import ui
+found = False#en variable som bestämmer om man har hittat den artisten man söker efter
 Exit= False# en variabel som håller koll på om man vill fortsätta eller inte
 url = "https://5hyqtreww2.execute-api.eu-north-1.amazonaws.com/artists/"# url:en till api:n
 
@@ -22,15 +23,16 @@ def List():# funktion för att skriva ut listan av artister
     for artist in response["artists"]:#printar alla artister
         ui.Echo(artist["name"])
 
-def view():# en funktion som hämtar och skriver ut information om artisterna
+def view():# en funktion som hämtar och skriver ut information om artistern
+    global found # variabeln måste göras global för att kunna ändras inom en funktion
     response = web.get(url)#url:en hämtas på nytt eftersom id:et uppdateras
     select = ui.promt("Artist to view").capitalize()# tar in vilket artist du vill ha och ger den storbokstav eftersom det är viktigt för api:n
     for artist in response["artists"]:# eb loop som kollar igenom varje artist i informationen och tar det id:et som stämmer överens
         if artist["name"] == select:
             Id = artist["id"]
             found = True
+            info= web.get(url+Id)# tar in ny info om just den artisten
             break# for loopen bryts när id:et har hittats
-    info= web.get(url+Id)# tar in ny info om just den artisten
     if (found == True):# om artist som man skrev in hittades så skrivs all information ut
         title(select)# kallar på funktion där medelandet är artisten som man skrev in
         ui.Echo("Members: "+str(info["artist"]["members"]))#information om alla medlemmar
