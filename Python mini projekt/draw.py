@@ -117,7 +117,7 @@ def game():# en funktion som ritar ut spel planen och bestämmer start positione
     player = C.create_rectangle(getcoord(playerpos[0],playerpos[1]),fill="#FFB438")# player objektet skapas
     UpdateHp(True, playerpos)# updaterar värdet utifall detn skulle ha tagit skada
     global ghost
-    if  info.difficulty!=0 and randint(0,10)>10:# det är en 90% chans att ett spöke generas
+    if  info.difficulty!=0 :# det är en 100% chans att ett spöke generas
         info.spawn=True# info spawn är att ett spöke har genererats
         ghost= C.create_rectangle(getcoord(ghostpos[0],ghostpos[1]),fill="#90D8DA")# ghost objektet skapas
         UpdateHp(False,ghostpos)# updaterar hp
